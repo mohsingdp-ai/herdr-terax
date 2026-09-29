@@ -51,6 +51,7 @@ import {
   useRef,
   useState,
 } from "react";
+import type { HerdrPane } from "./HerdrPaneSubmenu";
 import { labelFor } from "./lib/tabLabel";
 import type { EditorTab, Tab } from "./lib/useTabs";
 import { NewTabMenu } from "./NewTabMenu";
@@ -66,6 +67,7 @@ type Props = {
   onNewEditor: () => void;
   onNewGitGraph: () => void;
   onLaunchAgents: (request: AgentLaunchRequest) => void;
+  onOpenHerdrPane: (pane: HerdrPane) => void;
   onClose: (id: number) => void;
   /** Chrome-style: close every tab to the right of the given tab. */
   onCloseTabsToRight: (id: number) => void;
@@ -92,6 +94,7 @@ export function TabBar({
   onNewEditor,
   onNewGitGraph,
   onLaunchAgents,
+  onOpenHerdrPane,
   onClose,
   onCloseTabsToRight,
   onCloseOtherTabs,
@@ -594,6 +597,7 @@ export function TabBar({
           onNewEditor={onNewEditor}
           onNewGitGraph={onNewGitGraph}
           onLaunchAgents={onLaunchAgents}
+          onOpenHerdrPane={onOpenHerdrPane}
         />
       </div>
     </div>

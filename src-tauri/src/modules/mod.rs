@@ -4,6 +4,7 @@ pub mod app_menu;
 pub mod control;
 pub mod fs;
 pub mod git;
+pub mod herdr;
 pub mod history;
 pub mod lsp;
 pub mod net;

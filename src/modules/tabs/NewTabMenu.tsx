@@ -25,6 +25,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useRef, useState } from "react";
+import { type HerdrPane, HerdrPaneSubmenu } from "./HerdrPaneSubmenu";
 
 type Props = {
   onNew: () => void;
@@ -34,6 +35,7 @@ type Props = {
   onNewEditor: () => void;
   onNewGitGraph: () => void;
   onLaunchAgents: (request: AgentLaunchRequest) => void;
+  onOpenHerdrPane: (pane: HerdrPane) => void;
 };
 
 export function NewTabMenu({
@@ -44,6 +46,7 @@ export function NewTabMenu({
   onNewEditor,
   onNewGitGraph,
   onLaunchAgents,
+  onOpenHerdrPane,
 }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [launcherOpen, setLauncherOpen] = useState(false);
@@ -129,6 +132,7 @@ export function NewTabMenu({
                   className="text-muted-foreground"
                 />
               </DropdownMenuItem>
+              <HerdrPaneSubmenu onOpen={onOpenHerdrPane} />
               <DropdownMenuItem onSelect={onNewPrivate}>
                 <HugeiconsIcon
                   icon={IncognitoIcon}

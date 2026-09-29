@@ -81,6 +81,7 @@ import {
   useWindowTitle,
   useWorkspaceCwd,
 } from "@/modules/tabs";
+import { type HerdrPane, paneName } from "@/modules/tabs/HerdrPaneSubmenu";
 import { DEFAULT_SPACE_ID } from "@/modules/tabs/lib/useTabs";
 import {
   clearFocusedTerminal,
@@ -635,6 +636,24 @@ export default function App() {
       }
     },
     [inheritedCwdForNewTab, newAgentGroupTab],
+  );
+
+  const openHerdrPane = useCallback(
+    async (pane: HerdrPane) => {
+      // The id is typed into a shell, so accept only herdr's own id shape.
+      if (!/^term_[0-9a-f]+$/.test(pane.terminal_id)) return;
+      const bin = await invoke<string>("herdr_bin_path");
+      const { leafId } = newAgentTab(
+        inheritedCwdForNewTab(),
+        `herdr: ${paneName(pane)}`,
+      );
+      await whenSessionReady(leafId);
+      writeToSession(
+        leafId,
+        `exec ${quoteShellArg(bin)} terminal attach ${pane.terminal_id}\r`,
+      );
+    },
+    [inheritedCwdForNewTab, newAgentTab],
   );
 
   const sendCd = useCallback(
@@ -1394,6 +1413,7 @@ export default function App() {
               onNewEditor={() => setNewEditorOpen(true)}
               onNewGitGraph={openGitGraphFromContext}
               onLaunchAgents={launchAgentGroup}
+              onOpenHerdrPane={openHerdrPane}
               onClose={handleClose}
               onCloseTabsToRight={handleCloseTabsToRight}
               onCloseOtherTabs={handleCloseOtherTabs}
